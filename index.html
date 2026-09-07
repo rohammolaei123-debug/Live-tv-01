@@ -2,203 +2,40 @@
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Live TV 1</title>
-
 <style>
-*{box-sizing:border-box}
-
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#0f1115;
+body {
+  background:#111;
   color:white;
-}
-
-header{
-  padding:20px;
+  font-family:Arial;
   text-align:center;
-  background:#181b22;
+  padding:40px;
 }
-
-h1{margin:0 0 15px}
-
-.search{
+button {
+  display:block;
   width:90%;
-  max-width:500px;
-  padding:12px 16px;
+  max-width:400px;
+  margin:20px auto;
+  padding:20px;
+  font-size:20px;
   border:0;
-  border-radius:25px;
-  background:#292e38;
-  color:white;
-  font-size:16px;
-}
-
-.container{
-  max-width:1000px;
-  margin:auto;
-  padding:20px;
-}
-
-.channels{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:15px;
-}
-
-.channel{
-  background:#1b2029;
-  padding:22px;
-  border-radius:16px;
+  border-radius:12px;
   cursor:pointer;
-  text-align:center;
-  transition:.2s;
-}
-
-.channel:hover{
-  transform:translateY(-3px);
-  background:#252b36;
-}
-
-.logo{
-  font-size:45px;
-  margin-bottom:10px;
-}
-
-.channel h3{
-  margin:8px 0;
-}
-
-.channel p{
-  color:#aab1bd;
-  margin:0;
-}
-
-.info{
-  margin-top:25px;
-  background:#1b2029;
-  padding:20px;
-  border-radius:16px;
-  text-align:center;
-}
-
-footer{
-  text-align:center;
-  padding:30px;
-  color:#777;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <h1>📺 Live TV 1</h1>
+<h1>📺 Live TV 1</h1>
 
-  <input
-    id="search"
-    class="search"
-    type="text"
-    placeholder="🔎 جستجوی شبکه..."
-    oninput="searchChannels()"
-  >
-</header>
+<button onclick="location.href='https://www.iranintl.com/live'">
+📺 ایران اینترنشنال
+</button>
 
-<div class="container">
-
-  <h2>📡 شبکه‌های زنده</h2>
-
-  <div id="channels" class="channels"></div>
-
-  <div class="info">
-    <h2 id="selectedTitle">یک شبکه را انتخاب کنید</h2>
-    <p id="selectedText">
-      برای تماشای شبکه، روی کارت آن بزنید.
-    </p>
-  </div>
-
-</div>
-
-<footer>
-  Live TV 1
-</footer>
-
-<script>
-
-const channels = [
-
-  {
-    name:"ایران اینترنشنال",
-    icon:"📺",
-    description:"پخش زنده ایران اینترنشنال",
-    url:"https://www.iranintl.com/live"
-  },
-
-  {
-    name:"GEM RUBIX",
-    icon:"📡",
-    description:"پخش زنده GEM RUBIX",
-    url:"https://mrtv.me/gem-rubix/"
-  }
-
-];
-
-function renderChannels(list){
-
-  const box=document.getElementById("channels");
-
-  box.innerHTML="";
-
-  list.forEach(channel=>{
-
-    const item=document.createElement("div");
-
-    item.className="channel";
-
-    item.innerHTML=`
-      <div class="logo">${channel.icon}</div>
-      <h3>${channel.name}</h3>
-      <p>${channel.description}</p>
-    `;
-
-    item.onclick=()=>openChannel(channel);
-
-    box.appendChild(item);
-
-  });
-
-}
-
-function openChannel(channel){
-
-  document.getElementById("selectedTitle").textContent=
-    channel.name;
-
-  document.getElementById("selectedText").textContent=
-    "در حال باز کردن پخش زنده...";
-
-  window.open(channel.url,"_blank");
-
-}
-
-function searchChannels(){
-
-  const text=document
-    .getElementById("search")
-    .value
-    .toLowerCase();
-
-  const results=channels.filter(channel=>
-    channel.name.toLowerCase().includes(text)
-  );
-
-  renderChannels(results);
-
-}
-
-renderChannels(channels);
-
-</script>
+<button onclick="location.href='https://mrtv.me/gem-rubix/'">
+📡 GEM RUBIX
+</button>
 
 </body>
 </html>
