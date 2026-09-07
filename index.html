@@ -6,172 +6,86 @@
 <title>Live TV 1</title>
 
 <style>
-* {
-  box-sizing: border-box;
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#0f1115;
+  color:white;
 }
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #0f1115;
-  color: white;
+header{
+  padding:20px;
+  text-align:center;
+  background:#181b22;
 }
 
-header {
-  background: #171a21;
-  padding: 18px;
-  text-align: center;
-  position: sticky;
-  top: 0;
-  z-index: 10;
+h1{margin:0 0 15px}
+
+.search{
+  width:90%;
+  max-width:500px;
+  padding:12px 16px;
+  border:0;
+  border-radius:25px;
+  background:#292e38;
+  color:white;
+  font-size:16px;
 }
 
-header h1 {
-  margin: 0 0 12px;
-  font-size: 25px;
+.container{
+  max-width:1000px;
+  margin:auto;
+  padding:20px;
 }
 
-.search {
-  width: 90%;
-  max-width: 500px;
-  padding: 12px 16px;
-  border: none;
-  border-radius: 25px;
-  background: #252a34;
-  color: white;
-  font-size: 16px;
-  outline: none;
+.channels{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:15px;
 }
 
-.container {
-  max-width: 1100px;
-  margin: auto;
-  padding: 20px;
+.channel{
+  background:#1b2029;
+  padding:22px;
+  border-radius:16px;
+  cursor:pointer;
+  text-align:center;
+  transition:.2s;
 }
 
-.player {
-  background: black;
-  border-radius: 16px;
-  overflow: hidden;
-  margin-bottom: 20px;
-  box-shadow: 0 8px 30px rgba(0,0,0,.4);
+.channel:hover{
+  transform:translateY(-3px);
+  background:#252b36;
 }
 
-video {
-  width: 100%;
-  display: block;
-  min-height: 250px;
-  background: black;
+.logo{
+  font-size:45px;
+  margin-bottom:10px;
 }
 
-.now {
-  padding: 15px;
-  background: #191d25;
+.channel h3{
+  margin:8px 0;
 }
 
-.now h2 {
-  margin: 0 0 6px;
+.channel p{
+  color:#aab1bd;
+  margin:0;
 }
 
-.channels {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 14px;
+.info{
+  margin-top:25px;
+  background:#1b2029;
+  padding:20px;
+  border-radius:16px;
+  text-align:center;
 }
 
-.channel {
-  background: #191d25;
-  border-radius: 14px;
-  padding: 16px;
-  cursor: pointer;
-  transition: .2s;
-  border: 1px solid #292e38;
-}
-
-.channel:hover {
-  transform: translateY(-3px);
-  background: #222732;
-}
-
-.channel.active {
-  border: 2px solid #4f8cff;
-}
-
-.logo {
-  width: 55px;
-  height: 55px;
-  border-radius: 12px;
-  background: #303746;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 25px;
-  margin-bottom: 10px;
-}
-
-.channel h3 {
-  margin: 5px 0;
-}
-
-.channel p {
-  color: #9da5b4;
-  margin: 0;
-}
-
-.fav {
-  float: left;
-  font-size: 20px;
-  cursor: pointer;
-}
-
-.chat {
-  margin-top: 25px;
-  background: #191d25;
-  border-radius: 15px;
-  padding: 18px;
-}
-
-.chat h2 {
-  margin-top: 0;
-}
-
-.messages {
-  height: 180px;
-  overflow-y: auto;
-  background: #101218;
-  padding: 12px;
-  border-radius: 10px;
-  margin-bottom: 10px;
-}
-
-.message {
-  padding: 7px;
-  border-bottom: 1px solid #252a34;
-}
-
-.chat input {
-  width: 75%;
-  padding: 11px;
-  border: none;
-  border-radius: 8px;
-  background: #282d38;
-  color: white;
-}
-
-.chat button {
-  width: 20%;
-  padding: 11px;
-  border: none;
-  border-radius: 8px;
-  background: #4f8cff;
-  color: white;
-  cursor: pointer;
-}
-
-footer {
-  text-align: center;
-  color: #777;
-  padding: 30px;
+footer{
+  text-align:center;
+  padding:30px;
+  color:#777;
 }
 </style>
 </head>
@@ -180,9 +94,11 @@ footer {
 
 <header>
   <h1>📺 Live TV 1</h1>
+
   <input
-    class="search"
     id="search"
+    class="search"
+    type="text"
     placeholder="🔎 جستجوی شبکه..."
     oninput="searchChannels()"
   >
@@ -190,218 +106,97 @@ footer {
 
 <div class="container">
 
-  <div class="player">
-    <video id="video" controls playsinline></video>
+  <h2>📡 شبکه‌های زنده</h2>
 
-    <div class="now">
-      <h2 id="channelTitle">یک شبکه را انتخاب کنید</h2>
-      <p id="channelDescription">برای شروع، یکی از شبکه‌ها را انتخاب کنید.</p>
-    </div>
-  </div>
+  <div id="channels" class="channels"></div>
 
-  <h2>📡 شبکه‌ها</h2>
-
-  <div class="channels" id="channels"></div>
-
-  <div class="chat">
-    <h2>💬 چت</h2>
-
-    <div class="messages" id="messages">
-      <div class="message">👋 به چت Live TV خوش آمدید!</div>
-    </div>
-
-    <input id="messageInput" placeholder="پیامتان را بنویسید...">
-    <button onclick="sendMessage()">ارسال</button>
+  <div class="info">
+    <h2 id="selectedTitle">یک شبکه را انتخاب کنید</h2>
+    <p id="selectedText">
+      برای تماشای شبکه، روی کارت آن بزنید.
+    </p>
   </div>
 
 </div>
 
 <footer>
-  Live TV 1 — ساخته شده با ❤️
+  Live TV 1
 </footer>
 
 <script>
 
 const channels = [
+
   {
-    name: "شبکه ۱",
-    icon: "1️⃣",
-    description: "شبکه آزمایشی شماره ۱",
-    stream: ""
+    name:"ایران اینترنشنال",
+    icon:"📺",
+    description:"پخش زنده ایران اینترنشنال",
+    url:"https://www.iranintl.com/live"
   },
+
   {
-    name: "شبکه ۲",
-    icon: "2️⃣",
-    description: "شبکه آزمایشی شماره ۲",
-    stream: ""
-  },
-  {
-    name: "شبکه ۳",
-    icon: "3️⃣",
-    description: "شبکه آزمایشی شماره ۳",
-    stream: ""
-  },
-  {
-    name: "شبکه ۴",
-    icon: "4️⃣",
-    description: "شبکه آزمایشی شماره ۴",
-    stream: ""
-  },
-  {
-    name: "خبر",
-    icon: "📰",
-    description: "شبکه خبری",
-    stream: ""
-  },
-  {
-    name: "ورزش",
-    icon: "⚽",
-    description: "شبکه ورزشی",
-    stream: ""
+    name:"GEM RUBIX",
+    icon:"📡",
+    description:"پخش زنده GEM RUBIX",
+    url:"https://mrtv.me/gem-rubix/"
   }
+
 ];
 
-let currentChannel = null;
+function renderChannels(list){
 
-function renderChannels(list = channels) {
+  const box=document.getElementById("channels");
 
-  const container = document.getElementById("channels");
+  box.innerHTML="";
 
-  container.innerHTML = "";
+  list.forEach(channel=>{
 
-  list.forEach((channel, index) => {
+    const item=document.createElement("div");
 
-    const card = document.createElement("div");
+    item.className="channel";
 
-    card.className = "channel";
-
-    card.onclick = () => selectChannel(index);
-
-    card.innerHTML = `
+    item.innerHTML=`
       <div class="logo">${channel.icon}</div>
-
-      <span class="fav"
-        onclick="event.stopPropagation(); favorite(${index})">
-        ☆
-      </span>
-
       <h3>${channel.name}</h3>
       <p>${channel.description}</p>
     `;
 
-    container.appendChild(card);
+    item.onclick=()=>openChannel(channel);
+
+    box.appendChild(item);
+
   });
+
 }
 
-function selectChannel(index) {
+function openChannel(channel){
 
-  const channel = channels[index];
-
-  currentChannel = channel;
-
-  document.getElementById("channelTitle").textContent =
+  document.getElementById("selectedTitle").textContent=
     channel.name;
 
-  document.getElementById("channelDescription").textContent =
-    channel.description;
+  document.getElementById("selectedText").textContent=
+    "در حال باز کردن پخش زنده...";
 
-  const video = document.getElementById("video");
+  window.open(channel.url,"_blank");
 
-  if (channel.stream) {
-
-    video.src = channel.stream;
-    video.play().catch(() => {});
-
-  } else {
-
-    video.removeAttribute("src");
-    video.load();
-
-    alert(
-      "این شبکه هنوز لینک پخش زنده ندارد.\n" +
-      "بعداً می‌توانیم لینک واقعی شبکه را اضافه کنیم."
-    );
-  }
-
-  document.querySelectorAll(".channel")
-    .forEach((element, i) => {
-      element.classList.toggle("active", i === index);
-    });
 }
 
-function favorite(index) {
+function searchChannels(){
 
-  const saved =
-    JSON.parse(localStorage.getItem("favorites") || "[]");
+  const text=document
+    .getElementById("search")
+    .value
+    .toLowerCase();
 
-  if (saved.includes(index)) {
-
-    saved.splice(saved.indexOf(index), 1);
-
-  } else {
-
-    saved.push(index);
-  }
-
-  localStorage.setItem(
-    "favorites",
-    JSON.stringify(saved)
+  const results=channels.filter(channel=>
+    channel.name.toLowerCase().includes(text)
   );
 
-  alert("لیست علاقه‌مندی‌ها ذخیره شد ⭐");
+  renderChannels(results);
+
 }
 
-function searchChannels() {
-
-  const text =
-    document.getElementById("search").value.toLowerCase();
-
-  const filtered = channels.filter(channel =>
-    channel.name.toLowerCase().includes(text) ||
-    channel.description.toLowerCase().includes(text)
-  );
-
-  renderChannels(filtered);
-}
-
-function sendMessage() {
-
-  const input =
-    document.getElementById("messageInput");
-
-  const text = input.value.trim();
-
-  if (!text) return;
-
-  const message =
-    document.createElement("div");
-
-  message.className = "message";
-
-  message.textContent = "👤 شما: " + text;
-
-  document.getElementById("messages")
-    .appendChild(message);
-
-  input.value = "";
-
-  const box =
-    document.getElementById("messages");
-
-  box.scrollTop = box.scrollHeight;
-}
-
-document
-  .getElementById("messageInput")
-  .addEventListener("keydown", function(event) {
-
-    if (event.key === "Enter") {
-      sendMessage();
-    }
-
-  });
-
-renderChannels();
+renderChannels(channels);
 
 </script>
 
